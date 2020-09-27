@@ -100,7 +100,7 @@ exports.deleteUsers = (req, res) => {
     if (err) {
       console.log(err.message);
     } else {
-      response.ok("Successfully delete instructions", res);
+      response.ok("Successfully delete Users", res);
     }
   });
 };

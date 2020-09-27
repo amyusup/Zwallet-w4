@@ -2,6 +2,7 @@ module.exports = (app) => {
     var c_wellcome = require('../controller/index')
     var c_topup = require('../controller/topup')
     var c_users = require('../controller/users')
+    var c_transfer = require('../controller/transfer')
 
     // WELLCOME PAGE
     app.route('/')
@@ -32,4 +33,20 @@ module.exports = (app) => {
 
     app.route('/users')
     .delete(c_users.deleteUsers)
+
+    // TRANSFER
+    app.route('/transfer')
+    .get(c_transfer.getTransferData)
+
+    app.route('/transfer/:id')
+    .get(c_transfer.getTransferBy)
+
+    app.route('/transfer')
+    .post(c_transfer.addTransferData)
+
+    app.route('/transfer')
+    .put(c_transfer.updateTransferUpdate)
+
+    app.route('/transfer')
+    .delete(c_transfer.deleteTransferData)
 }
