@@ -6,7 +6,8 @@ module.exports = {
   getUsers: (req, res) => {
     mUsers.getUsers(db, (err, result, fields) => {
       if (err) {
-        console.log(err.message);
+        // console.log(err.message);
+        response.server("Internal server error. Try again.", res)
       } else {
         response.ok(result, res);
       }
@@ -39,13 +40,14 @@ module.exports = {
     ) {
       mUsers.addUsers(db, req.body, (err) => {
         if (err) {
-          console.log(err.message);
+          // console.log(err.message);
+          response.server("Internal server error. Try again.", res)
         } else {
           response.ok("successfully add Users Data", res);
         }
       });
     } else {
-      response.validate("All fields must be filled.", res);
+      response.server("All fields must be filled.", res);
     }
   },
 
@@ -78,7 +80,8 @@ module.exports = {
       mUsers.getUsersWhere(db, id, (err, result, fields) => {
        
         if (err) {
-          console.log(err.message);
+          // console.log(err.message);
+          response.server("Internal server error. Try again.", res)
         } else {
           if (result.length) {
             const data = Object.entries(req.body).map((item) => {
@@ -89,16 +92,17 @@ module.exports = {
 
             mUsers.updateUsers(db, data, id, (err, result, fields) => {
               if (!result.affectedRows) {
-                console.log(err.message);
+                // console.log(err.message);
+                response.client("Failed update instructions. Try again.",res);
               } else {
                 response.ok("Successfully update users", res);
               }
             });
+          }else{
+            response.client("ID not found. Try again",res)
           }
         }
-      });
-    } else {
-      response.validate("All fields must be filled.", res);
+      })
     }
   },
 
@@ -106,7 +110,8 @@ module.exports = {
     const { id } = req.params;
    mUsers.deleteUsers(db,id, (err) => {
       if (err) {
-        console.log(err.message);
+        // console.log(err.message);
+        response.server("Internal server error. Try again.", res)
       } else {
         response.ok("Successfully delete Users", res);
       }

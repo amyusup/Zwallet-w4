@@ -13,7 +13,8 @@ module.exports = {
     // });
     mTopup.getInstructions(db, (err, result, fields) => {
       if (err) {
-        console.log(err.message);
+        // console.log(err.message);
+        response.server("Internal server error. Try again.", res)
       } else {
         response.ok(result, res);
       }
@@ -28,13 +29,14 @@ module.exports = {
     if (step && instructions) {
       mTopup.addInstructions(db, req.body, (err, result, fields) => {
         if (err) {
-          console.log(err.message);
+          // console.log(err.message);
+          response.server("Internal server error. Try again.", res)
         } else {
           response.ok("successfully add instruction", res);
         }
       });
     } else {
-      response.validate("All fields must be filled.", res);
+      response.client("All fields must be filled.", res);
     }
   },
 
@@ -50,7 +52,8 @@ module.exports = {
     if (id.trim() || step.trim() || instructions.trim()) {
       mTopup.getInstructionsWhere(db, id, (err, result, fields) => {
         if (err) {
-          console.log(err.message)
+          // console.log(err.message)
+          response.server("Internal server error. Try again.", res)
         } else {
           if (result.length) {
             const data = Object.entries(req.body).map((item) => {
@@ -61,11 +64,14 @@ module.exports = {
 
             mTopup.updateIntructions(db, data, id, (err, result, fields) => {
               if (!result.affectedRows) {
-                console.log(err.message)
+                // console.log(err.message)
+                response.client("Failed update instructions. Try again.",res);
               } else {
                 response.ok("Successfully update instructions", res)
               }
             })
+          }else{
+            response.client("ID not found. Try again",res)
           }
         }
       })
@@ -78,7 +84,8 @@ module.exports = {
     } = req.params;
     mTopup.deleteIntructions(db,id, (err, result, fields) => {
       if (err) {
-        console.log(err.message);
+        // console.log(err.message);
+        response.server("Internal server error. Try again.", res)
       } else {
         response.ok("Successfully delete instructions", res);
       }
