@@ -1,75 +1,101 @@
-var response = require("../helper/res");
-var db = require("../helper/db");
+const response = require("../helper/res");
+const db = require("../helper/db");
+const mTransfer = require("../model/transfer");
 
-exports.getTransferData = (req, res) => {
-  db.query(`SELECT * FROM vtransfer`, (err, result, fields) => {
-    if (err) {
-      console.log(err.message);
-    } else {
-      response.ok(result, res);
-    }
-  });
-};
-
-exports.getTransferBy = (req, res) => {
-  const { id } = req.params;
-  db.query(
-    `SELECT * FROM vtransfer WHERE name LIKE '%${id}%'`,
-    (err, result, fields) => {
+module.exports = {
+  getTransferData: (req, res) => {
+    mTransfer.getTransferData(db, (err, result) => {
       if (err) {
         console.log(err.message);
       } else {
         response.ok(result, res);
       }
-    }
-  );
-};
+    });
+  },
 
-exports.addTransferData = (req, res) => {
-  const { idSender, idReceiver, amount, notes } = req.body;
+  getTransferLike: (req, res) => {
+    const {
+      key
+    } = req.params;
+    mTransfer.getTransferLike(db, key, (err, result) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        response.ok(result, res);
+      }
+    });
+  },
 
-  if (idSender && idReceiver && amount && notes) {
-    db.query(
-      `INSERT INTO transfer( idSender, idReceiver, amount, date, notes) VALUES ('${idSender}', '${idReceiver}', '${amount}', current_timestamp() , '${notes}')`,
-      (err) => {
+  addTransferData: (req, res) => {
+    const {
+      idSender,
+      idReceiver,
+      amount,
+      notes
+    } = req.body;
+
+    if (idSender && idReceiver && amount && notes) {
+      mTransfer.addTransferData(db, req.body, (err) => {
         if (err) {
           console.log(err.message);
         } else {
           response.ok("successfully add Transfer Data", res);
         }
-      }
-    );
-  } else {
-    response.validate("All fields must be filled.", res);
-  }
-};
+      });
+    } else {
+      response.validate("All fields must be filled.", res);
+    }
+  },
 
-exports.updateTransferUpdate = (req, res) => {
-  const { id, idSender, idReceiver, amount, notes } = req.body;
+  updateTransfer: (req, res) => {
+    const {
+      id
+    } = req.params;
+    const {
+      idSender = "",
+        idReceiver = "",
+        amount = "",
+        notes = "",
+    } = req.body;
 
-  if (id && idSender && idReceiver && amount && notes) {
-    db.query(
-      `UPDATE transfer SET idSender = '${idSender}', idReceiver = '${idReceiver}', amount = '${amount}', date=current_timestamp(), notes='${notes}' WHERE id = ${id}`,
-      (err, result, fields) => {
+    if (idSender.trim() || idReceiver.trim() || amount.trim() || notes.trim()) {
+      mTransfer.getTransferWhere(db, id, (err, result, fields) => {
+
         if (err) {
           console.log(err.message);
         } else {
-          response.ok("Successfully changed Transfer Data", res);
-        }
-      }
-    );
-  } else {
-    response.validate("All fields must be filled.", res);
-  }
-};
+          if (result.length) {
+            const data = Object.entries(req.body).map((item) => {
+              return parseInt(item[1]) > 0 ?
+                `${item[0]}=${item[1]} ` :
+                `${item[0]}='${item[1]}' `;
+            });
 
-exports.deleteTransferData = (req, res) => {
-  const { id } = req.body;
-  db.query(`DELETE FROM transfer WHERE id=${id}`, (err, result, fields) => {
-    if (err) {
-      console.log(err.message);
+            mTransfer.updateTransfer(db, data, id, (err, result, fields) => {
+              if (!result.affectedRows) {
+                console.log(err.message);
+              } else {
+                response.ok("Successfully update Transfer Data", res);
+              }
+            });
+          }
+        }
+      });
     } else {
-      response.ok("Successfully delete Transfer Data", res);
+      response.validate("All fields must be filled.", res);
     }
-  });
-};
+  },
+
+  deleteTransferData: (req, res) => {
+    const {
+      id
+    } = req.params;
+    mTransfer.deleteTransferData(db,id, (err, result, fields) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        response.ok("Successfully delete Transfer Data", res);
+      }
+    });
+  },
+}

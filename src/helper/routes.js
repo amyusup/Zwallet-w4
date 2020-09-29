@@ -15,10 +15,10 @@ module.exports = (app) => {
     app.route('/topup')
     .post(c_topup.addInstructions)
 
-    app.route('/topup')
-    .put(c_topup.updateIntructions)
+    app.route('/topup/:id')
+    .patch(c_topup.updateIntructions)
     
-    app.route('/topup')
+    app.route('/topup/:id')
     .delete(c_topup.deleteIntructions)
 
     // USERS
@@ -28,25 +28,25 @@ module.exports = (app) => {
     app.route('/users')
     .post(c_users.addUsers)
 
-    app.route('/u   sers')
-    .put(c_users.updatUsers)
+    app.route('/users/:id')
+    .patch(c_users.updateUsers)
 
-    app.route('/users')
+    app.route('/users/:id')
     .delete(c_users.deleteUsers)
 
     // TRANSFER
     app.route('/transfer')
     .get(c_transfer.getTransferData)
 
-    app.route('/transfer/:id')
-    .get(c_transfer.getTransferBy)
+    app.route('/transfer/:key')
+    .get(c_transfer.getTransferLike)
 
     app.route('/transfer')
     .post(c_transfer.addTransferData)
 
-    app.route('/transfer')
-    .put(c_transfer.updateTransferUpdate)
+    app.route('/transfer/:id')
+    .patch(c_transfer.updateTransfer)
 
-    app.route('/transfer')
+    app.route('/transfer/:id')
     .delete(c_transfer.deleteTransferData)
 }
