@@ -8,6 +8,13 @@ module.exports = {
     });
   },
 
+  createOk: (result, res) => {
+    res.status(201).send({
+      succes: true,
+      data: result,
+    });
+  },
+
   client: (result, res) => {
     res.status(400).send({
       succes: false,
@@ -20,5 +27,5 @@ module.exports = {
       succes: false,
       data: result,
     });
-  }
+  },
 }

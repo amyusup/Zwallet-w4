@@ -35,7 +35,7 @@ module.exports = {
           // console.log(err.message);
           response.server("Internal server error. Try again.", res);
         } else {
-          response.ok("successfully add Transfer Data", res);
+          response.createOk("successfully add Transfer Data", res);
         }
       });
     } else {

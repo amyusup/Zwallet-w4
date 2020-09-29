@@ -43,7 +43,7 @@ module.exports = {
           // console.log(err.message);
           response.server("Internal server error. Try again.", res)
         } else {
-          response.ok("successfully add Users Data", res);
+          response.createOk("successfully add Users Data", res);
         }
       });
     } else {

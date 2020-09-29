@@ -7,7 +7,7 @@ module.exports = {
     db.query(`SELECT * FROM topup WHERE id=${id}`, callback);
   },
 
-  addInstructions: (db, data, id, callback)=>{
+  addInstructions: (db, data, callback)=>{
     db.query(`INSERT INTO topup(step,instructions) values ('${data.step}','${data.instructions}')`, callback)
   },
   
