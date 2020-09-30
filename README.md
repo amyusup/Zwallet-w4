@@ -7,8 +7,6 @@ ZWALLET api is a restfull api that:
 
 ## Installation
 
-Push button running in postman i
-
 Press the run button in posman and the collection will be automatically saved in your postman
 
 ```bash
