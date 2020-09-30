@@ -3,9 +3,9 @@ module.exports = {
     db.query(`SELECT * FROM vtransfer`, callback);
   },
 
-  getTransferLike: (db, key, callback) => {
-    db.query(`SELECT * FROM vtransfer WHERE name LIKE '%${key}%'`, callback);
-  },
+  // getTransferLike: (db, key, callback) => {
+  //   db.query(`SELECT * FROM vtransfer WHERE name LIKE '%${key}%'`, callback);
+  // },
 
   getTransferWhere: (db, id, callback) => {
     db.query(`SELECT * FROM vtransfer WHERE id=${id}`, callback);

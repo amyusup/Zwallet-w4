@@ -14,17 +14,17 @@ module.exports = {
     });
   },
 
-  getTransferLike: (req, res) => {
-    const { key } = req.params;
-    mTransfer.getTransferLike(db, key, (err, result) => {
-      if (err) {
-        // console.log(err.message);
-        response.server("Internal server error. Try again.", res);
-      } else {
-        response.ok(result, res);
-      }
-    });
-  },
+  // getTransferLike: (req, res) => {
+  //   const { key } = req.params;
+  //   mTransfer.getTransferLike(db, key, (err, result) => {
+  //     if (err) {
+  //       // console.log(err.message);
+  //       response.server("Internal server error. Try again.", res);
+  //     } else {
+  //       response.ok(result, res);
+  //     }
+  //   });
+  // },
 
   addTransferData: (req, res) => {
     const { idSender, idReceiver, amount, notes } = req.body;
@@ -44,7 +44,7 @@ module.exports = {
   },
 
   updateTransfer: (req, res) => {
-    const { id } = req.params;
+    const id  = req.query.id;
     const {
       idSender = "",
       idReceiver = "",
@@ -82,7 +82,7 @@ module.exports = {
   },
 
   deleteTransferData: (req, res) => {
-    const { id } = req.params;
+    const id  = req.query.id;
     mTransfer.deleteTransferData(db, id, (err, result, fields) => {
       if (err) {
         // console.log(err.message);

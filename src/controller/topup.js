@@ -29,7 +29,7 @@ module.exports = {
     if (step && instructions) {
 
       mTopup.addInstructions(db, req.body, (err, result, fields) => {
-       
+
         if (err) {
           // console.log(err.message);
           response.server("Internal server error. Try again.", res);
@@ -44,12 +44,10 @@ module.exports = {
 
   updateIntructions: (req, res) => {
     const {
-      step="",
-      instructions=""
+      step = "",
+        instructions = ""
     } = req.body;
-    const {
-      id
-    } = req.params
+    const id = req.query.id
 
     if (id.trim() || step.trim() || instructions.trim()) {
       mTopup.getInstructionsWhere(db, id, (err, result, fields) => {
@@ -71,6 +69,8 @@ module.exports = {
                 response.ok("Successfully update instructions", res)
               }
             });
+          } else {
+            response.client("ID not found. Try again", res)
           }
         }
       })
@@ -78,10 +78,8 @@ module.exports = {
   },
 
   deleteIntructions: (req, res) => {
-    const {
-      id
-    } = req.params;
-    mTopup.deleteIntructions(db,id, (err, result, fields) => {
+    const id = req.query.id;
+    mTopup.deleteIntructions(db, id, (err, result, fields) => {
       if (err) {
         // console.log(err.message);
         response.server("Internal server error. Try again.", res);

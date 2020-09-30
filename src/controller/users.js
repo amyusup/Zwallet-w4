@@ -14,6 +14,18 @@ module.exports = {
     });
   },
 
+  getUsersLike: (req, res) => {
+    const key = req.query.name;
+    mUsers.getUsersLike(db, key, (err, result) => {
+      if (err) {
+        // console.log(err.message);
+        response.server("Internal server error. Try again.", res);
+      } else {
+        response.ok(result, res);
+      }
+    });
+  },
+
   addUsers: (req, res) => {
     const {
       firstName,
@@ -52,7 +64,7 @@ module.exports = {
   },
 
   updateUsers: (req, res) => {
-    const { id } = req.params;
+    const id  = req.query.id;
     const {
       firstName="",
       lastName="",
@@ -107,7 +119,7 @@ module.exports = {
   },
 
   deleteUsers: (req, res) => {
-    const { id } = req.params;
+    const  id  = req.query.id;
    mUsers.deleteUsers(db,id, (err) => {
       if (err) {
         // console.log(err.message);

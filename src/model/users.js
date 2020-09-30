@@ -3,6 +3,10 @@ module.exports = {
     db.query(`SELECT * FROM users`, callback);
   },
 
+  getUsersLike: (db, key, callback) => {
+    db.query(`SELECT * FROM users WHERE CONCAT_WS(' ',firstName,lastName)  LIKE '%${key}%' ORDER BY CONCAT_WS(' ',firstName,lastName) ASC`, callback);
+  },
+
   getUsersWhere: (db, id, callback) => {
     db.query(`SELECT * FROM users WHERE id=${id}`, callback);
   },
