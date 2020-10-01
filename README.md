@@ -2,7 +2,7 @@
 
 ZWALLET api is a restfull api that:
 - apply the mvc system
-- use enironment variables for config
+- use environment variables for config
 - etc
 
 ## Installation
