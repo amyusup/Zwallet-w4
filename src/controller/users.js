@@ -6,8 +6,8 @@ module.exports = {
   getUsers: (req, res) => {
     mUsers.getUsers(db, (err, result, fields) => {
       if (err) {
-        // console.log(err.message);
-        response.server("Internal server error. Try again.", res)
+        console.log(err.message);
+        // response.server("Internal server error. Try again.", res)
       } else {
         response.ok(result, res);
       }
