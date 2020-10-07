@@ -34,7 +34,7 @@ app.use('/transfer', rTransfer)
 // var routes = require("./src/helper/routes");
 // routes(app);
 
-app.listen(8000,() =>{
+app.listen(process.env.PORT || 8000,() =>{
     console.log('Sever running on port 8000')
 });
 
