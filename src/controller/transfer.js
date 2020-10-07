@@ -13,9 +13,9 @@ module.exports = {
       }
     });
   },
-  getLimitTransferData: (req, res) => {
+  getLimitTransferData: async (req, res) => {
     const { id,limit} = req.params
-    mTransfer.getLimitTransferData(db,id, limit, (err, result) => {
+    await mTransfer.getLimitTransferData(db,id, limit, (err, result) => {
       if (err) {
         console.log(err.message);
         // response.server("Internal server error. Try again.", res);

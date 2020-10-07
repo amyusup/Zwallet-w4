@@ -1,17 +1,17 @@
 module.exports = {
   getTransferData: (db, callback) => {
-    db.query(`SELECT * FROM vtransfer`, callback);
+    db.query(`SELECT * FROM vTransfer`, callback);
   },
   getLimitTransferData: (db,id, limit, callback) => {
-    db.query(`SELECT * FROM vtransfer WHERE idSender=${id} LIMIT ${limit}` , callback);
+    db.query(`SELECT * FROM vTransfer WHERE idSender=${id} LIMIT ${limit}` , callback);
   },
 
   getTransferOrderDate: (db,id, order, callback) => {
-    db.query(`SELECT * FROM vtransfer WHERE idSender=${id} ORDER BY ${order}(date) DESC LIMIT 2 `, callback);
+    db.query(`SELECT * FROM vTransfer WHERE idSender=${id} ORDER BY ${order}(date) DESC LIMIT 2 `, callback);
   },
 
   getTransferWhere: (db, id, callback) => {
-    db.query(`SELECT * FROM vtransfer WHERE id=${id}`, callback);
+    db.query(`SELECT * FROM vTransfer WHERE id=${id}`, callback);
   },
 
   addTransferData: (db, data, callback)=>{
