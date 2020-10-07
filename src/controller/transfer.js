@@ -13,22 +13,35 @@ module.exports = {
       }
     });
   },
+  getLimitTransferData: (req, res) => {
+    const { id,limit} = req.params
+    mTransfer.getLimitTransferData(db,id, limit, (err, result) => {
+      if (err) {
+        console.log(err.message);
+        // response.server("Internal server error. Try again.", res);
+      } else {
+        response.ok(result, res);
+      }
+    });
+  },
 
-  // getTransferLike: (req, res) => {
-  //   const { key } = req.params;
-  //   mTransfer.getTransferLike(db, key, (err, result) => {
-  //     if (err) {
-  //       // console.log(err.message);
-  //       response.server("Internal server error. Try again.", res);
-  //     } else {
-  //       response.ok(result, res);
-  //     }
-  //   });
-  // },
+  getTransferOrderDate: (req, res) => {
+    const { id } = req.params;
+    const  order  = req.query.order;
+    // console.log(order)
+    mTransfer.getTransferOrderDate(db, id,order, (err, result) => {
+      if (err) {
+        console.log(err.message);
+        // response.server("Internal server error. Try again.", res);
+      } else {
+        response.ok(result, res);
+      }
+    });
+  },
 
   addTransferData: (req, res) => {
     const { idSender, idReceiver, amount, notes } = req.body;
-
+    // console.log(amount)
     if (idSender && idReceiver && amount && notes) {
       mTransfer.addTransferData(db, req.body, (err) => {
         if (err) {
@@ -44,7 +57,7 @@ module.exports = {
   },
 
   updateTransfer: (req, res) => {
-    const id  = req.query.id;
+    const {id}  = req.params;
     const {
       idSender = "",
       idReceiver = "",
@@ -82,7 +95,7 @@ module.exports = {
   },
 
   deleteTransferData: (req, res) => {
-    const id  = req.query.id;
+    const {id}  = req.params;
     mTransfer.deleteTransferData(db, id, (err, result, fields) => {
       if (err) {
         // console.log(err.message);

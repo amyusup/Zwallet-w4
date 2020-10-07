@@ -47,12 +47,11 @@ module.exports = {
       step = "",
         instructions = ""
     } = req.body;
-    const id = req.query.id
+    const {id} = req.params
 
-    if (id.trim() || step.trim() || instructions.trim()) {
+    if ( step.trim() || instructions.trim()) {
       mTopup.getInstructionsWhere(db, id, (err, result, fields) => {
         if (err) {
-          // console.log(err.message)
           response.server("Internal server error. Try again.", res);
         } else {
           if (result.length) {
@@ -78,7 +77,7 @@ module.exports = {
   },
 
   deleteIntructions: (req, res) => {
-    const id = req.query.id;
+    const {id} = req.params
     mTopup.deleteIntructions(db, id, (err, result, fields) => {
       if (err) {
         // console.log(err.message);

@@ -1,14 +1,14 @@
 module.exports = {
   getUsers: (db, callback) => {
-    db.query(`SELECT * FROM users`, callback);
+    db.query(`SELECT * FROM vUsers`, callback);
   },
 
   getUsersLike: (db, key, callback) => {
-    db.query(`SELECT * FROM users WHERE CONCAT_WS(' ',firstName,lastName)  LIKE '%${key}%' ORDER BY CONCAT_WS(' ',firstName,lastName) ASC`, callback);
+    db.query(`SELECT * FROM vUsers WHERE name LIKE '%${key}%' ORDER BY name ASC`, callback);
   },
 
   getUsersWhere: (db, id, callback) => {
-    db.query(`SELECT * FROM users WHERE id=${id}`, callback);
+    db.query(`SELECT * FROM vUsers WHERE id=${id}`, callback);
   },
 
   addUsers: (db, data, callback)=>{

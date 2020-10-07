@@ -5,17 +5,17 @@ router
     .route("/")
     .get(cUsers.getUsers)
     .post(cUsers.addUsers);
+    
+    router
+        .route("/search")
+        .get(cUsers.getUsersLike)
 
-router
-    .route("/update")
+router    
+    .route("/:id")
+    .get(cUsers.getUsersWhere)
     .patch(cUsers.updateUsers)
+    .delete(cUsers.deleteUsers);
+    
 
-router
-    .route("/delete")
-    .delete(cUsers.deleteUsers)
-
-router
-    .route("/search")
-    .get(cUsers.getUsersLike)
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+// var cors = require('cors')
 const db = require("./src/helper/db");
 const rIndex = require('./src/routes/index')
 const rTopup = require('./src/routes/topup')
@@ -10,9 +11,18 @@ const rTransfer = require('./src/routes/transfer')
 app.use(
   bodyParser.urlencoded({
     extended: false,
-  })
+  }),
+  bodyParser.json(),
+  
 );
 
+app.use(function(req,res,next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+  res.header("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization, X-Requested-With");
+
+ 
+});
 
 
 app.use('/', rIndex)

@@ -14,6 +14,18 @@ module.exports = {
     });
   },
 
+  getUsersWhere: (req, res) => {
+    const {id} = req.params
+    mUsers.getUsersWhere(db, id, (err, result, fields) => {
+      if (err) {
+        // console.log(err.message);
+        response.server("Internal server error. Try again.", res)
+      } else {
+        response.ok(result, res);
+      }
+    });
+  },
+
   getUsersLike: (req, res) => {
     const key = req.query.name;
     mUsers.getUsersLike(db, key, (err, result) => {
@@ -64,7 +76,8 @@ module.exports = {
   },
 
   updateUsers: (req, res) => {
-    const id  = req.query.id;
+    const {id}  = req.params;
+    console.log(id)
     const {
       firstName="",
       lastName="",
@@ -119,7 +132,7 @@ module.exports = {
   },
 
   deleteUsers: (req, res) => {
-    const  id  = req.query.id;
+    const  {id}  = req.params;
    mUsers.deleteUsers(db,id, (err) => {
       if (err) {
         // console.log(err.message);

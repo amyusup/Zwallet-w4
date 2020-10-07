@@ -2,10 +2,13 @@ module.exports = {
   getTransferData: (db, callback) => {
     db.query(`SELECT * FROM vtransfer`, callback);
   },
+  getLimitTransferData: (db,id, limit, callback) => {
+    db.query(`SELECT * FROM vtransfer WHERE idSender=${id} LIMIT ${limit}` , callback);
+  },
 
-  // getTransferLike: (db, key, callback) => {
-  //   db.query(`SELECT * FROM vtransfer WHERE name LIKE '%${key}%'`, callback);
-  // },
+  getTransferOrderDate: (db,id, order, callback) => {
+    db.query(`SELECT * FROM vtransfer WHERE idSender=${id} ORDER BY ${order}(date) DESC LIMIT 2 `, callback);
+  },
 
   getTransferWhere: (db, id, callback) => {
     db.query(`SELECT * FROM vtransfer WHERE id=${id}`, callback);
@@ -13,7 +16,7 @@ module.exports = {
 
   addTransferData: (db, data, callback)=>{
     db.query(
-      `INSERT INTO transfer( idSender, idReceiver, amount, date, notes) VALUES ('${data.idSender}', '${data.idReceiver}', '${data.amount}', current_timestamp() , '${data.notes}')`, callback)
+      `INSERT INTO transfer( idSender, idReceiver, amount, notes) VALUES ('${data.idSender}', '${data.idReceiver}', '${data.amount}' , '${data.notes}')`, callback)
   },
   
   updateTransfer: (db, data, id, callback)=>{

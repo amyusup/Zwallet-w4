@@ -1,6 +1,6 @@
 module.exports = {
   getInstructions: (db, callback) => {
-    db.query(`SELECT * FROM topup`, callback);
+    db.query(`SELECT * FROM topup ORDER BY step ASC`, callback);
   },
 
   getInstructionsWhere: (db, id, callback) => {
