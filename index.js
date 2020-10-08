@@ -39,3 +39,7 @@ app.listen(process.env.PORT || 8000,() =>{
 });
 
 
+// DB_HOST=db4free.net
+// DB_USER=amyusup26
+// DB_PASS=12345678
+// DB_NAME=zwallet_amy
